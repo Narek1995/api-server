@@ -19,13 +19,6 @@ public class ApiServerApplication {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 	}
 
-
-	@GetMapping("/test")
-	@ResponseBody
-	public String test(){
-		return "OK";
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApiServerApplication.class, args);
 	}

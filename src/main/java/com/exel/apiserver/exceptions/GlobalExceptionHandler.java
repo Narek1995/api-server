@@ -20,33 +20,33 @@ import java.util.stream.Collectors;
 @Component
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ApiInternalException.class)
-    @ResponseBody
-    public ResponseEntity<Object> handleAllExceptions(ApiInternalException ex) {
-        return new ResponseEntity<>(ex.getMessage(), ex.getStatus());
-    }
+	@ExceptionHandler(ApiInternalException.class)
+	@ResponseBody
+	public ResponseEntity<Object> handleAllExceptions (ApiInternalException ex) {
+		return new ResponseEntity<>(ex.getMessage(), ex.getStatus());
+	}
 
-    @ExceptionHandler
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String,Object> handle(MethodArgumentNotValidException exception) {
-        return error(exception.getBindingResult().getFieldErrors()
-                .stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.toList()));
-    }
+	@ExceptionHandler
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public Map<String, Object> handle (MethodArgumentNotValidException exception) {
+		return error(exception.getBindingResult().getFieldErrors()
+				.stream()
+				.map(FieldError :: getDefaultMessage)
+				.collect(Collectors.toList()));
+	}
 
-    @ExceptionHandler
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String,Object> handle(ConstraintViolationException exception) {
-        return error(exception.getConstraintViolations()
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .collect(Collectors.toList()));
-    }
+	@ExceptionHandler
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public Map<String, Object> handle (ConstraintViolationException exception) {
+		return error(exception.getConstraintViolations()
+				.stream()
+				.map(ConstraintViolation :: getMessage)
+				.collect(Collectors.toList()));
+	}
 
-    private Map<String,Object> error(Object message) {
-        return Collections.singletonMap("error", message);
-    }
+	private Map<String, Object> error (Object message) {
+		return Collections.singletonMap("error", message);
+	}
 }

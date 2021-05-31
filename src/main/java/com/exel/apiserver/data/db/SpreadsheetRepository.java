@@ -14,12 +14,14 @@ import java.util.UUID;
 @Transactional
 public interface SpreadsheetRepository extends CrudRepository<Spreadsheet, UUID> {
 
-    @Query("SELECT s from Spreadsheet s where s.ownerId = ?1 AND s.Id = ?2")
-    Optional<Spreadsheet> selectSpreadsheet(String userId, UUID spreadsheetId);
-    @Query("SELECT s from Spreadsheet s where s.ownerId = ?1")
-    List<Spreadsheet> selectSpreadsheetsForUser(String userId);
-    @Modifying
-    @Query("DELETE FROM Spreadsheet s where s.ownerId = ?1 AND s.Id = ?2")
-    void deleteSpreadsheet(String userId, UUID spreadsheetId);
+	@Query("SELECT s from Spreadsheet s where s.ownerId = ?1 AND s.Id = ?2")
+	Optional<Spreadsheet> selectSpreadsheet (String userId, UUID spreadsheetId);
+
+	@Query("SELECT s from Spreadsheet s where s.ownerId = ?1")
+	List<Spreadsheet> selectSpreadsheetsForUser (String userId);
+
+	@Modifying
+	@Query("DELETE FROM Spreadsheet s where s.ownerId = ?1 AND s.Id = ?2")
+	void deleteSpreadsheet (String userId, UUID spreadsheetId);
 
 }

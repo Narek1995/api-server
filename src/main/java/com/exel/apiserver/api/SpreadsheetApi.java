@@ -14,36 +14,36 @@ import java.util.UUID;
 @RequestMapping("/spreadsheet")
 @Validated
 public class SpreadsheetApi {
-    private final SpreadsheetApiHandler spreadsheetApiHandler;
+	private final SpreadsheetApiHandler spreadsheetApiHandler;
 
-    @Autowired
-    public SpreadsheetApi(SpreadsheetApiHandler spreadsheetApiHandler) {
-        this.spreadsheetApiHandler = spreadsheetApiHandler;
-    }
+	@Autowired
+	public SpreadsheetApi (SpreadsheetApiHandler spreadsheetApiHandler) {
+		this.spreadsheetApiHandler = spreadsheetApiHandler;
+	}
 
-    @GetMapping("/{spreadsheetId}")
-    public Spreadsheet getSpreadsheetById(@RequestParam(name = "userId") String userId,
-                                          @PathVariable(name = "spreadsheetId") UUID spreadsheetId) {
-        return spreadsheetApiHandler.getSpreadsheetById(userId, spreadsheetId);
-    }
+	@GetMapping("/{spreadsheetId}")
+	public Spreadsheet getSpreadsheetById (@RequestParam(name = "userId") String userId,
+	                                       @PathVariable(name = "spreadsheetId") UUID spreadsheetId) {
+		return spreadsheetApiHandler.getSpreadsheetById(userId, spreadsheetId);
+	}
 
-    @GetMapping
-    public List<Spreadsheet> getAllSpreadsheets(@RequestParam(name = "userId") String userId) {
-        return spreadsheetApiHandler.getSpreadsheetsForUser(userId);
-    }
+	@GetMapping
+	public List<Spreadsheet> getAllSpreadsheets (@RequestParam(name = "userId") String userId) {
+		return spreadsheetApiHandler.getSpreadsheetsForUser(userId);
+	}
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public Spreadsheet createSpreadsheet(@RequestBody @Valid Spreadsheet spreadsheet,
-                                         @RequestParam("userId") String userId) {
-        spreadsheet.setOwnerId(userId);
-        return spreadsheetApiHandler.saveSpreadsheet(spreadsheet);
-    }
+	@PostMapping()
+	@ResponseStatus(HttpStatus.CREATED)
+	public Spreadsheet createSpreadsheet (@RequestBody @Valid Spreadsheet spreadsheet,
+	                                      @RequestParam("userId") String userId) {
+		spreadsheet.setOwnerId(userId);
+		return spreadsheetApiHandler.saveSpreadsheet(spreadsheet);
+	}
 
-    @DeleteMapping("/{spreadsheetId}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteSpreadsheet(@PathVariable("spreadsheetId") UUID spreadsheetId,
-                                  @RequestParam("userId") String userId) {
-        spreadsheetApiHandler.deleteSpreadsheet(userId, spreadsheetId);
-    }
+	@DeleteMapping("/{spreadsheetId}")
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteSpreadsheet (@PathVariable("spreadsheetId") UUID spreadsheetId,
+	                               @RequestParam("userId") String userId) {
+		spreadsheetApiHandler.deleteSpreadsheet(userId, spreadsheetId);
+	}
 }

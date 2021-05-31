@@ -17,23 +17,23 @@ import java.util.UUID;
 @Entity
 @Table(name = "spreadsheet")
 public class Spreadsheet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
-    private UUID Id;
-    @NotBlank(message = "Name is mandatory")
-    @Column(name = "name")
-    private String name;
-    @Column(name = "ownerId")
-    private String ownerId;
-    @NotNull(message = "rowsCount is mandatory")
-    @Min(value = 1, message = "minimum 1 row is permitted")
-    @Max(value = 10, message = "maximum 10 rows are permitted")
-    @Column(name = "rowsCount")
-    private Integer rowsCount;
-    @NotNull(message = "columnsCount is mandatory")
-    @Column(name = "columnsCount")
-    @Min(value = 1, message = "minimum 1 column is permitted")
-    @Max(value = 10, message = "maximum 10 columns are permitted")
-    private Integer columnsCount;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
+	private UUID Id;
+	@NotBlank(message = "Name is mandatory")
+	@Column(name = "name")
+	private String name;
+	@Column(name = "ownerId")
+	private String ownerId;
+	@NotNull(message = "rowsCount is mandatory")
+	@Min(value = 1, message = "minimum 1 row is permitted")
+	@Max(value = 10, message = "maximum 10 rows are permitted")
+	@Column(name = "rowsCount")
+	private Integer rowsCount;
+	@NotNull(message = "columnsCount is mandatory")
+	@Column(name = "columnsCount")
+	@Min(value = 1, message = "minimum 1 column is permitted")
+	@Max(value = 10, message = "maximum 10 columns are permitted")
+	private Integer columnsCount;
 }

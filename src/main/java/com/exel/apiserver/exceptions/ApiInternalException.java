@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Builder
-public class ApiInternalException extends RuntimeException{
-    private final HttpStatus status;
-    private final String message;
+public class ApiInternalException extends RuntimeException {
+	private final HttpStatus status;
+	private final String message;
 
 }

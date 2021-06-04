@@ -1,5 +1,7 @@
 package com.exel.apiserver.api;
 
+import com.exel.apiserver.data.db.Row;
+import com.exel.apiserver.data.db.RowRepository;
 import com.exel.apiserver.data.db.Spreadsheet;
 import com.exel.apiserver.data.db.SpreadsheetRepository;
 import com.exel.apiserver.exceptions.ApiInternalException;
@@ -14,10 +16,13 @@ import java.util.UUID;
 @Component
 public class SpreadsheetApiHandler {
 	private final SpreadsheetRepository spreadSheetRepository;
+	private final RowRepository rowRepository;
 
 	@Autowired
-	public SpreadsheetApiHandler (SpreadsheetRepository spreadSheetRepository) {
+	public SpreadsheetApiHandler (SpreadsheetRepository spreadSheetRepository,
+	                              RowRepository rowRepository) {
 		this.spreadSheetRepository = spreadSheetRepository;
+		this.rowRepository = rowRepository;
 	}
 
 	public Spreadsheet getSpreadsheetById (String userId, UUID id) {
@@ -29,7 +34,10 @@ public class SpreadsheetApiHandler {
 					.message("Spreadsheet does not exists")
 					.build();
 		} else {
-			return spreadsheet.get();
+			Spreadsheet result = spreadsheet.get();
+			List<Row> rows = rowRepository.selectRowsForSpreadsheet(userId, result.getId());
+			result.setRows(rows);
+			return result;
 		}
 	}
 

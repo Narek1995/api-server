@@ -26,7 +26,18 @@ public class RowApiHandler {
 	}
 
 	public void updateCellValue (String userId, UUID rowId, Integer cellNumber, String value) {
-		rowRepository.updateCellValue(userId, rowId, cellNumber, value);
+		Optional<Row> row = rowRepository.findById(rowId);
+		if(row.isPresent()) {
+			Optional<Spreadsheet> sp = spreadsheetRepository.selectSpreadsheet(userId, row.get().getSpreadsheetId());
+			if(sp.isEmpty()) {
+				throw ApiInternalException
+						.builder()
+						.message("Access denied")
+						.status(HttpStatus.FORBIDDEN)
+						.build();
+			}
+		}
+		rowRepository.updateCellValue(rowId, cellNumber, value);
 	}
 
 	public List<Row> selectRowsForSpreadsheet (String userId, UUID spreadsheetId) {
@@ -50,6 +61,15 @@ public class RowApiHandler {
 						.message("cells count can not be greater than spreadsheet sells count")
 						.status(HttpStatus.BAD_REQUEST)
 						.build();
+			}
+			Optional<Row> r = rowRepository.findBySpreadsheetIdAndNumber(spreadsheet.getId(), row.getNumber());
+			if(r.isPresent()) {
+				for(int i = 0; i <row.getCells().size(); i++) {
+					if(!row.getCells().get(i).equals("")) {
+						rowRepository.updateCellValue(r.get().getId(), i + 1, row.getCells().get(i));
+						return r.get();
+					}
+				}
 			}
 			return rowRepository.save(row);
 		} else {

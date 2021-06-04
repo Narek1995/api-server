@@ -1,19 +1,19 @@
 version: '3.3'
 services:
-#  app:
-#    image: '12559/narek1995/exel-api'
-#    build:
-#      context: .
-#    container_name: app
-#    depends_on:
-#      - db
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre-db:5432/exelDb
-#      - SPRING_DATASOURCE_USERNAME=exelDb
-#      - SPRING_DATASOURCE_PASSWORD=BGObb0BJd8rfg05
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-#    ports:
-#      - "80:80"
+  app:
+    image: '12559/narek1995/exel-api'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre-db:5432/exelDb
+      - SPRING_DATASOURCE_USERNAME=exelDb
+      - SPRING_DATASOURCE_PASSWORD=BGObb0BJd8rfg05
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "80:80"
   db:
     image: 'postgres:13.1-alpine'
     container_name: postgre-db
